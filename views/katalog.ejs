@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Katalog Produk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <h1 class="text-3xl font-bold text-center mb-8">Katalog Peyek Enak</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <% products.forEach(product => { %>
+            <div class="bg-white p-4 rounded-lg shadow-md border">
+                <h2 class="text-xl font-semibold"><%= product.nama %></h2>
+                <p class="text-sm text-gray-500">Varian: <%= product.varian %></p>
+                <p class="text-lg font-bold text-orange-500 mt-2">Rp <%= product.harga %></p>
+                <button class="mt-4 bg-green-500 text-white px-4 py-2 rounded w-full">Pesan Sekarang</button>
+            </div>
+        <% }) %>
+    </div>
+</body>
+</html>
