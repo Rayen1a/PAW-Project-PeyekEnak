@@ -5,6 +5,7 @@ const path = require('path');
 const logger = require('./middlewares/logger');
 const apiRoutes = require('./routes/apiRoutes');
 const webRoutes = require('./routes/webRoutes');
+const chatRoutes = require('./routes/chat.routes');
 
 // Konfigurasi View Engine (EJS)
 app.set('view engine', 'ejs');
@@ -20,6 +21,7 @@ app.use(logger);
 // Routing
 app.use('/api', apiRoutes);
 app.use('/', webRoutes);
+app.use('/api', chatRoutes); // Menghasilkan endpoint POST /api/chat
 
 const PORT = 3000;
 app.listen(PORT, () => {
