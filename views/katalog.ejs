@@ -11,23 +11,42 @@
     <div class="max-w-5xl mx-auto mt-10 p-4">
         <div class="flex justify-between items-center mb-8">
             <h1 class="text-3xl font-bold text-gray-800">Katalog Peyek Enak</h1>
-            <!-- Tombol Tambah Data -->
-            <a href="/katalog/tambah" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700">Tambah Produk</a>
+            <a href="/katalog/tambah" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 font-medium">+ Tambah Produk</a>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <% products.forEach(product => { %>
-                <div class="bg-white p-5 rounded-xl shadow-md border hover:shadow-lg transition">
-                    <h2 class="text-xl font-semibold"><%= product.nama %></h2>
-                    <p class="text-sm text-gray-500 mb-2">Varian: <%= product.varian %></p>
-                    <p class="text-2xl font-bold text-orange-500 mb-4">Rp <%= product.harga %></p>
+                <div class="bg-white p-5 rounded-xl shadow-md border hover:shadow-lg transition flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800"><%= product.nama %></h2>
+                        <p class="text-sm text-gray-500 mb-2">Varian: <%= product.varian %></p>
+                        <!-- Format angka Rp. 10.000 -->
+                        <p class="text-2xl font-bold text-orange-500 mb-3">
+                            Rp. <%= Number(product.harga).toLocaleString('id-ID') %>
+                        </p>
+                        <p class="text-sm text-gray-600 line-clamp-2 mb-4">
+                            <%= product.deskripsi || 'Belum ada deskripsi produk.' %>
+                        </p>
+                    </div>
                     
-                    <div class="flex justify-between space-x-2 mt-4">
-                        <a href="/kontak?produk=<%= product.nama %>" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 font-medium w-full text-center">Pesan</a>
-                        <!-- Form Hapus Data -->
-                        <form action="/katalog/hapus/<%= product.id %>" method="POST" onsubmit="return confirm('Yakin hapus?');">
-                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Hapus</button>
-                        </form>
+                    <div class="space-y-2 mt-2">
+                        <!-- Tombol Lihat Deskripsi & Review -->
+                        <a href="/katalog/detail/<%= product.id %>" class="block text-center bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 font-medium">
+                            Lihat Deskripsi & Review
+                        </a>
+
+                        <div class="flex space-x-2">
+                            <!-- Tombol Edit / Update -->
+                            <a href="/katalog/edit/<%= product.id %>" class="bg-yellow-500 text-white px-3 py-2 rounded-lg hover:bg-yellow-600 font-medium w-1/2 text-center">
+                                Edit
+                            </a>
+                            <!-- Tombol Hapus -->
+                            <form action="/katalog/hapus/<%= product.id %>" method="POST" class="w-1/2" onsubmit="return confirm('Yakin hapus produk ini?');">
+                                <button type="submit" class="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 font-medium w-full">
+                                    Hapus
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             <% }) %>

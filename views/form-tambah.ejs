@@ -9,20 +9,33 @@
     <%- include('partials/navbar') %>
     <div class="max-w-lg mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
         <h1 class="text-2xl font-bold mb-6 text-gray-800">Tambah Produk Baru</h1>
+
+        <% if (error) { %>
+            <div class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm font-medium"><%= error %></div>
+        <% } %>
+
         <form action="/katalog/tambah" method="POST" class="space-y-4">
             <div>
                 <label class="block text-sm font-medium">Nama Produk</label>
-                <input type="text" name="nama" required class="w-full p-2 border rounded">
+                <input type="text" name="nama" placeholder="Contoh: Peyek Kacang Tanah" required class="w-full p-2 border rounded">
             </div>
             <div>
                 <label class="block text-sm font-medium">Varian</label>
-                <input type="text" name="varian" required class="w-full p-2 border rounded">
+                <input type="text" name="varian" placeholder="Contoh: Original / Daun Jeruk" required class="w-full p-2 border rounded">
             </div>
             <div>
-                <label class="block text-sm font-medium">Harga</label>
-                <input type="number" name="harga" required class="w-full p-2 border rounded">
+                <label class="block text-sm font-medium">Harga (Angka Saja, Contoh: 10000)</label>
+                <input type="text" inputmode="numeric" pattern="[1-9][0-9]*" name="harga" placeholder="10000" title="Masukkan angka positif tanpa titik atau tanda minus (contoh: 10000)" required class="w-full p-2 border rounded">
+                <p class="text-xs text-gray-500 mt-1">Otomatis diformat menjadi Rp. 10.000 di katalog. Tidak boleh minus (-).</p>
             </div>
-            <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan Produk</button>
+            <div>
+                <label class="block text-sm font-medium">Deskripsi Produk</label>
+                <textarea name="deskripsi" rows="3" placeholder="Jelaskan rasa, tekstur, atau berat bersih produk..." required class="w-full p-2 border rounded"></textarea>
+            </div>
+            <div class="flex space-x-2">
+                <a href="/katalog" class="w-1/2 text-center bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">Batal</a>
+                <button type="submit" class="w-1/2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 font-medium">Simpan Produk</button>
+            </div>
         </form>
     </div>
 </body>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail & Review - <%= product.nama %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 pb-10">
+    <%- include('partials/navbar') %>
+
+    <div class="max-w-4xl mx-auto mt-10 p-4 space-y-8">
+        <!-- Kartu Informasi & Deskripsi Produk -->
+        <div class="bg-white p-6 rounded-xl shadow-md border">
+            <div class="flex justify-between items-start">
+                <div>
+                    <span class="bg-orange-100 text-orange-700 text-xs font-semibold px-3 py-1 rounded-full">Varian: <%= product.varian %></span>
+                    <h1 class="text-3xl font-bold text-gray-800 mt-2"><%= product.nama %></h1>
+                    <p class="text-2xl font-bold text-orange-500 mt-2">Rp. <%= Number(product.harga).toLocaleString('id-ID') %></p>
+                </div>
+                <a href="/katalog" class="text-sm text-gray-500 hover:text-gray-800 underline">&larr; Kembali ke Katalog</a>
+            </div>
+
+            <div class="mt-6 border-t pt-4">
+                <h2 class="text-lg font-semibold text-gray-700 mb-2">Deskripsi Produk</h2>
+                <p class="text-gray-600 leading-relaxed whitespace-pre-line"><%= product.deskripsi || 'Tidak ada deskripsi tambahan untuk produk ini.' %></p>
+            </div>
+        </div>
+
+        <!-- Bagian Review Calon Pembeli -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Form Tambah Review -->
+            <div class="bg-white p-6 rounded-xl shadow-md border h-fit">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Tulis Review Produk</h2>
+                <form action="/katalog/detail/<%= product.id %>/review" method="POST" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nama Anda</label>
+                        <input type="text" name="nama_pembeli" placeholder="Contoh: Sufri" required class="w-full p-2 border rounded mt-1">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Rating</label>
+                        <select name="rating" class="w-full p-2 border rounded mt-1">
+                            <option value="5">⭐⭐⭐⭐⭐ (5 - Sangat Enak)</option>
+                            <option value="4">⭐⭐⭐⭐ (4 - Enak)</option>
+                            <option value="3">⭐⭐⭐ (3 - Cukup)</option>
+                            <option value="2">⭐⭐ (2 - Kurang)</option>
+                            <option value="1">⭐ (1 - Tidak Sesuai)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Ulasan / Komentar</label>
+                        <textarea name="komentar" rows="3" placeholder="Bagikan pendapatmu tentang rasa dan kerenyahan peyek ini..." required class="w-full p-2 border rounded mt-1"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 font-semibold">Kirim Review</button>
+                </form>
+            </div>
+
+            <!-- Daftar Review Masuk -->
+            <div class="bg-white p-6 rounded-xl shadow-md border">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Ulasan Pembeli (<%= reviews.length %>)</h2>
+                <% if (reviews.length === 0) { %>
+                    <p class="text-gray-500 text-sm italic">Belum ada ulasan untuk produk ini. Jadilah yang pertama memberikan review!</p>
+                <% } else { %>
+                    <div class="space-y-4 max-h-96 overflow-y-auto pr-2">
+                        <% reviews.forEach(rev => { %>
+                            <div class="border-b pb-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-gray-800"><%= rev.nama_pembeli %></span>
+                                    <span class="text-yellow-500 text-sm"><%= '⭐'.repeat(rev.rating) %></span>
+                                </div>
+                                <p class="text-gray-600 text-sm mt-1"><%= rev.komentar %></p>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

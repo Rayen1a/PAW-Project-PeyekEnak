@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Produk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 pb-10">
+    <%- include('partials/navbar') %>
+    <div class="max-w-lg mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
+        <h1 class="text-2xl font-bold mb-6 text-gray-800">Edit Produk: <%= product.nama %></h1>
+
+        <% if (error) { %>
+            <div class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm font-medium"><%= error %></div>
+        <% } %>
+
+        <form action="/katalog/edit/<%= product.id %>" method="POST" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium">Nama Produk</label>
+                <input type="text" name="nama" value="<%= product.nama %>" required class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label class="block text-sm font-medium">Varian</label>
+                <input type="text" name="varian" value="<%= product.varian %>" required class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label class="block text-sm font-medium">Harga (Angka Saja, Contoh: 10000)</label>
+                <input type="text" inputmode="numeric" pattern="[1-9][0-9]*" name="harga" value="<%= product.harga %>" title="Masukkan angka positif tanpa titik atau tanda minus (contoh: 10000)" required class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label class="block text-sm font-medium">Deskripsi Produk</label>
+                <textarea name="deskripsi" rows="3" required class="w-full p-2 border rounded"><%= product.deskripsi %></textarea>
+            </div>
+            <div class="flex space-x-2">
+                <a href="/katalog" class="w-1/2 text-center bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">Batal</a>
+                <button type="submit" class="w-1/2 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 font-medium">Update Produk</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
