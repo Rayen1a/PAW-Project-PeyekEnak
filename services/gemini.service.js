@@ -23,7 +23,7 @@ Pertanyaan Pengguna: "${userMessage}"
 `;
 
         // 3. Gunakan model dasar yang paling stabil
-        const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-3.8-flash" });
 
         const result = await model.generateContent(prompt);
         return result.response.text();
